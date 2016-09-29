@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+  postgres:
+      container_name: krappelaarnio_pg
+      image: postgres:9.6
+      ports:
+        - 5434:5432
+      environment:
+        POSTGRES_USER: krappe
+        POSTGRES_PASSWORD: laarnio
+      volumes:
+        - /var/lib/krappelaarnio/pgdata:/var/lib/postgresql/data
