@@ -10,4 +10,4 @@ services:
         POSTGRES_USER: krappe
         POSTGRES_PASSWORD: laarnio
       volumes:
-        - /var/lib/krappelaarnio/pgdata:/var/lib/postgresql/data
+        - ~/docker/pgdata:/var/lib/postgresql/data
