@@ -10,6 +10,8 @@ const Knex = require('knex')
 const knexConfig = require('./../knexfile')
 const Model = require('objection').Model
 
+const config = require('./config/http.conf.js')
+
 // Initialize knex.
 const knex = Knex(knexConfig)
 
@@ -35,6 +37,6 @@ if (app.get('env') === 'development') {
   app.use(errorHandler())
 }
 
-module.exports = app.listen(app.get('port'), function () {
-  console.log('Express server listening on port ' + app.get('port'))
+module.exports = app.listen(config.port, function () {
+  console.log('Express server listening on port ' + config.port)
 })
