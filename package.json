@@ -26,7 +26,10 @@
   "dependencies": {
     "errorhandler": "^1.5.0",
     "helmet": "^3.4.0",
+    "knex": "^0.12.7",
+    "morgan": "^1.8.1",
     "objection": "^0.6.2",
+    "pg": "^6.1.2",
     "vue": "^2.1.10",
     "vue-router": "^2.2.0"
   },
