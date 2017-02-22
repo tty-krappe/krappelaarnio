@@ -1,2 +1,3 @@
 web/build/*.js
 web/config/*.js
+data/*
