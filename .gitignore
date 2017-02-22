@@ -3,6 +3,6 @@
 node_modules/
 web/dist/
 npm-debug.log
-test/unit/coverage
-test/e2e/reports
+web/test/unit/coverage
+web/test/e2e/reports
 selenium-debug.log
