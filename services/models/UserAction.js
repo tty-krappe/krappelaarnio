@@ -2,6 +2,7 @@
 
 const Model = require('objection').Model
 const _ = require('lodash')
+const User = require('./User')
 
 const ActionType = require('../enums/ActionType')
 
@@ -22,6 +23,19 @@ class UserAction extends Model {
         createdAt: {
           type: ['string', 'null'],
           format: ['date-time', 'null']
+        }
+      }
+    }
+  }
+
+  static get relationMappings () {
+    return {
+      user: {
+        relation: Model.HasOneRelation,
+        modelClass: User,
+        join: {
+          from: 'UserAction.userId',
+          to: 'User.id'
         }
       }
     }
