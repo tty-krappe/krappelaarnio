@@ -2,7 +2,7 @@
 
 exports.up = function (knex) {
   return knex.schema
-    .table('UserAction'), function (table) {
+    .table('UserAction', function (table) {
       table.json('meta');
     });
 };
