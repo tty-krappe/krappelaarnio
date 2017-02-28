@@ -1,6 +1,7 @@
 'use strict'
 
 const Model = require('objection').Model
+const UserAction = require('./UserAction')
 
 class User extends Model {
   static get tableName () {
@@ -28,6 +29,19 @@ class User extends Model {
         updatedAt: {
           type: ['string', 'null'],
           format: ['date-time', 'null']
+        }
+      }
+    }
+  }
+
+  static get relationMappings () {
+    return {
+      actions: {
+        relation: Model.HasManyRelation,
+        modelClass: UserAction,
+        join: {
+          from: 'User.id',
+          to: 'UserAction.userId'
         }
       }
     }
