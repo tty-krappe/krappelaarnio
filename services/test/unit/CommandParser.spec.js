@@ -1,5 +1,6 @@
 const chai = require('chai')
 const expect = chai.expect
+chai.use(require('chai-as-promised'))
 
 const CommandParser = require('../../modules/CommandParser')
 
@@ -13,30 +14,44 @@ describe('CommandParser', () => {
 
     it('should properly parse !naamat command', () => {
       const parsedCmd = telegramParser.resolve('arttu', '!naamat')
-      expect(parsedCmd.command.actionType).to.equal('wasted')
-      expect(parsedCmd.nickname).to.equal('arttu')
-      expect(parsedCmd.message).to.equal('')
+      expect(parsedCmd).to.eventually.deep.equal({
+        actionType: 'wasted',
+        message: '',
+        nickname: 'arttu'
+      })
     })
 
-    it('should return false on unrecognized command', () => {
-      expect(telegramParser.resolve('laarnio', '!vittuvääräsuunta')).to.be.false
+    it('should reject promise on unrecognized command', () => {
+      expect(telegramParser.resolve('laarnio', '!vittuvääräsuunta')).to.be.eventually.rejected
     })
 
     it('should properly parse !naamat aliases', () => {
       let parsedCmd = telegramParser.resolve('kukis', '!naamt')
-      expect(parsedCmd.command.actionType).to.equal('wasted')
+      expect(parsedCmd).to.eventually.deep.equal({
+        actionType: 'wasted',
+        message: '',
+        nickname: 'kukis'
+      })
 
       parsedCmd = telegramParser.resolve('masi', '!naamta')
-      expect(parsedCmd.command.actionType).to.equal('wasted')
+      expect(parsedCmd).to.eventually.deep.equal({
+        actionType: 'wasted',
+        message: '',
+        nickname: 'masi'
+      })
     })
 
     it('should properly parse !naamat command and additional message', () => {
       const parsedCmd = telegramParser.resolve('atte', '!naamat as fuck')
-      expect(parsedCmd.message).to.equal('as fuck')
+      expect(parsedCmd).to.eventually.deep.equal({
+        actionType: 'wasted',
+        message: 'as fuck',
+        nickname: 'atte'
+      })
     })
 
     it('should not allow !krappe command in telegram', () => {
-      expect(telegramParser.resolve('uusidiootti', '!krappe')).to.be.false
+      expect(telegramParser.resolve('uusidiootti', '!krappe')).be.eventually.rejected
     })
   })
 
@@ -49,24 +64,28 @@ describe('CommandParser', () => {
 
     it('should properly resolve !krappe command', () => {
       const parsedCmd = ircParser.resolve('krippe', '!krappe')
-      expect(parsedCmd.command.actionType).to.equal('krappe')
-      expect(parsedCmd.nickname).to.equal('krippe')
-      expect(parsedCmd.message).to.equal('')
+      expect(parsedCmd).to.eventually.deep.equal({
+        actionType: 'krappe',
+        message: '',
+        nickname: 'krippe'
+      })
     })
 
     it('should properly resolve !krappe command and additional message', () => {
       const parsedCmd = ircParser.resolve('krippe', '!krappe infernaalinen')
-      expect(parsedCmd.command.actionType).to.equal('krappe')
-      expect(parsedCmd.nickname).to.equal('krippe')
-      expect(parsedCmd.message).to.equal('infernaalinen')
+      expect(parsedCmd).to.eventually.deep.equal({
+        actionType: 'krappe',
+        message: 'infernaalinen',
+        nickname: 'krippe'
+      })
     })
 
     it('should not allow commands with wrong prefix', () => {
-      expect(ircParser.resolve('foo', '.krappe')).to.be.false
+      expect(ircParser.resolve('foo', '.krappe')).be.eventually.rejected
     })
 
     it('should return false on empty message', () => {
-      expect(ircParser.resolve('foo', '')).to.be.false
+      expect(ircParser.resolve('foo', '')).be.eventually.rejected
     })
   })
 })

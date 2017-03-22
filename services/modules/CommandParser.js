@@ -1,6 +1,7 @@
 'use strict'
 
 const _ = require('lodash')
+const Promise = require('bluebird')
 
 const ActionType = require('../enums/ActionType')
 
@@ -32,21 +33,21 @@ class CommandParser {
     const cmdName = parts[0]
 
     if (!cmdName.length || cmdName[0] !== this._prefix) {
-      return false
+      return Promise.reject(new Error('Empty or not prefixed'))
     }
 
     const cmd = _.find(this._commands, (cmd) => _.contains(cmd.textCommands, cmdName.substr(1)))
 
     if (!cmd) {
       // Check if substance
-      return false
+      return Promise.reject(new Error('Unrecognized'))
     }
 
-    return {
+    return Promise.resolve({
       actionType: cmd.actionType,
       message: _.drop(parts, 1).join(' '),
       nickname: nickname
-    }
+    })
   }
 }
 
