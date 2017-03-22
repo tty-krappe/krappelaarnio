@@ -3,6 +3,7 @@
 const Model = require('objection').Model
 const _ = require('lodash')
 const User = require('./User')
+const Substance = require('./Substance')
 
 const ActionType = require('../enums/ActionType')
 
@@ -20,6 +21,7 @@ class UserAction extends Model {
         id: {type: 'integer'},
         userId: {type: 'integer'},
         action: {type: 'string', enum: _.values(ActionType)},
+        substanceId: {type: 'integer'},
         createdAt: {
           type: ['string', 'null'],
           format: ['date-time', 'null']
@@ -36,6 +38,14 @@ class UserAction extends Model {
         join: {
           from: 'UserAction.userId',
           to: 'User.id'
+        }
+      },
+      substance: {
+        relation: Model.HasOneRelation,
+        modelClass: Substance,
+        join: {
+          from: 'UserAction.substanceId',
+          to: 'Substance.id'
         }
       }
     }
