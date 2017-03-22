@@ -7,5 +7,6 @@ module.exports = {
   Stat: 'stat',
   SubstanceAbuse: 'substanceAbuse',
   Top: 'top',
-  Wasted: 'wasted'
+  Wasted: 'wasted',
+  Liftoff: 'liftoff'
 }
