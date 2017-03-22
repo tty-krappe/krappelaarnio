@@ -24,6 +24,7 @@
     "test": "npm run services:test && npm run web:test"
   },
   "dependencies": {
+    "chai-as-promised": "^6.0.0",
     "errorhandler": "^1.5.0",
     "express": "^4.14.1",
     "helmet": "^3.4.0",
