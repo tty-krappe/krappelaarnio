@@ -27,15 +27,15 @@ class CommandParser {
     this._commands = _.filter(commands, (cmd) => _.contains(cmd.allowedInterfaces, interfaceType))
   }
 
-  resolve (user, message) {
+  resolve (nickname, message) {
     const parts = message.trim().split(' ')
-    const action = parts[0]
+    const cmdName = parts[0]
 
-    if (!action.length || action[0] !== this._prefix) {
+    if (!cmdName.length || cmdName[0] !== this._prefix) {
       return false
     }
 
-    const cmd = _.find(this._commands, (cmd) => _.contains(cmd.textCommands, action.substr(1)))
+    const cmd = _.find(this._commands, (cmd) => _.contains(cmd.textCommands, cmdName.substr(1)))
 
     if (!cmd) {
       // Check if substance
@@ -45,7 +45,7 @@ class CommandParser {
     return {
       actionType: cmd.actionType,
       message: _.drop(parts, 1).join(' '),
-      nickname: user
+      nickname: nickname
     }
   }
 }
