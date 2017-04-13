@@ -1,0 +1,38 @@
+[
+  {
+    "substanceType": "beer",
+    "aliases": [
+      "olut",
+      "kalja",
+      "bisse"
+    ]
+  },
+  {
+    "substanceType": "cider",
+    "aliases": [
+      "siideri",
+      "sidukka"
+    ]
+  },
+  {
+    "substanceType": "redWine",
+    "aliases": [
+      "punkku",
+      "punaviini"
+    ]
+  },
+  {
+    "substanceType": "whiteWine",
+    "aliases": [
+      "valkkari",
+      "valkoviini"
+    ]
+  },
+  {
+    "substanceType": "vodka",
+    "aliases": [
+      "vodka",
+      "votkuli"
+    ]
+  }
+]
