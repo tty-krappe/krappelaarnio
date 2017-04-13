@@ -22,7 +22,7 @@ const commands = [
 class CommandParser {
   constructor (interfaceType) {
     this._prefix = '!'
-    this._commands = _.filter(commands, (cmd) => _.contains(cmd.allowedInterfaces, interfaceType))
+    this._commands = _.filter(commands, (cmd) => _.includes(cmd.allowedInterfaces, interfaceType))
   }
 
   resolve (nickname, message) {
@@ -33,7 +33,7 @@ class CommandParser {
       return Promise.reject(new Error('Empty or not prefixed'))
     }
 
-    const cmd = _.find(this._commands, (cmd) => _.contains(cmd.textCommands, cmdName.substr(1)))
+    const cmd = _.find(this._commands, (cmd) => _.includes(cmd.textCommands, cmdName.substr(1)))
 
     if (!cmd) {
       return SubstanceController.findByAlias(cmdName.substr(1))
