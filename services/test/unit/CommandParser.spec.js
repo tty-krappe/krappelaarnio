@@ -2,6 +2,8 @@ const chai = require('chai')
 const expect = chai.expect
 chai.use(require('chai-as-promised'))
 
+const databasePopulate = require('../../utils/databasePopulate')
+
 const CommandParser = require('../../modules/CommandParser')
 
 describe('CommandParser', () => {
@@ -85,7 +87,27 @@ describe('CommandParser', () => {
     })
 
     it('should return false on empty message', () => {
-      expect(ircParser.resolve('foo', '')).be.eventually.rejected
+      return expect(ircParser.resolve('foo', '')).be.eventually.rejected
+    })
+
+    describe('Substances', () => {
+      before(() => {
+        return databasePopulate.populateSubstancesFromJson('../../data/test/substances.json')
+      })
+
+      it('should properly resolve !kalja command as substance usage', () => {
+        const parsedCmd = ircParser.resolve('masi', '!kalja')
+        return expect(parsedCmd).to.eventually.deep.equal({
+          actionType: 'substanceAbuse',
+          message: '',
+          nickname: 'masi'
+        })
+      })
+
+      it('should properly reject !kalja:D:D command as unrecognized', () => {
+        const parsedCmd = ircParser.resolve('masi', '!kalja:D:D')
+        return expect(parsedCmd).be.eventually.rejected
+      })
     })
   })
 })

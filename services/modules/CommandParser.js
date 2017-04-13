@@ -3,6 +3,7 @@
 const _ = require('lodash')
 const Promise = require('bluebird')
 
+const SubstanceController = require('../controllers/SubstanceController')
 const ActionType = require('../enums/ActionType')
 
 const commands = [
@@ -10,10 +11,6 @@ const commands = [
     actionType: ActionType.Krappe,
     allowedInterfaces: ['irc'],
     textCommands: ['krappe']
-  },
-  {
-    actionType: ActionType.SubstanceAbuse,
-    allowedInterfaces: ['irc', 'telegram']
   },
   {
     actionType: ActionType.Wasted,
@@ -39,8 +36,21 @@ class CommandParser {
     const cmd = _.find(this._commands, (cmd) => _.contains(cmd.textCommands, cmdName.substr(1)))
 
     if (!cmd) {
-      // Check if substance
-      return Promise.reject(new Error('Unrecognized'))
+      return SubstanceController.findByAlias(cmdName.substr(1))
+        .then((substance) => {
+          if (substance) {
+            return {
+              actionType: ActionType.SubstanceAbuse,
+              message: _.drop(parts, 1).join(' '),
+              nickname: nickname
+            }
+          } else {
+            return Promise.reject(new Error('Unrecognized'))
+          }
+        })
+        .catch((err) => {
+          return Promise.reject(new Error(err))
+        })
     }
 
     return Promise.resolve({
