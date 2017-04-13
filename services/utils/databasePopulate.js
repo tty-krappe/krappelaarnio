@@ -18,7 +18,7 @@ const fromFile = (fn) => {
 }
 
 const populateSubstances = (data) => {
-  db.truncate().then(() => {
+  return db.truncate().then(() => {
     return db.Substance.query().insertWithRelated(data)
   })
 }

@@ -1,7 +1,6 @@
 const chai = require('chai')
 const expect = chai.expect
 chai.use(require('chai-as-promised'))
-chai.use(require('chai-shallow-deep-equal'))
 
 const databasePopulate = require('../../utils/databasePopulate')
 const substanceController = require('../../controllers/SubstanceController')
@@ -13,38 +12,20 @@ describe('SubstanceController', () => {
 
   it('should find substances by alias', () => {
     return Promise.all([
-      expect(substanceController.findByAlias('bisse')).to.eventually.shallowDeepEqual({
-        substanceType: 'beer',
-        aliases: [
-          'olut',
-          'kalja',
-          'bisse'
-        ]
+      expect(substanceController.findByAlias('bisse').omit(['id', 'aliases']).then((s) => s.toJSON())).to.eventually.deep.equal({
+        substanceType: 'beer'
       }),
 
-      expect(substanceController.findByAlias('olut')).to.eventually.shallowDeepEqual({
-        substanceType: 'beer',
-        aliases: [
-          'olut',
-          'kalja',
-          'bisse'
-        ]
+      expect(substanceController.findByAlias('olut').omit(['id', 'aliases']).then((s) => s.toJSON())).to.eventually.deep.equal({
+        substanceType: 'beer'
       }),
 
-      expect(substanceController.findByAlias('siideri')).to.eventually.shallowDeepEqual({
-        substanceType: 'cider',
-        aliases: [
-          'siideri',
-          'sidukka'
-        ]
+      expect(substanceController.findByAlias('siideri').omit(['id', 'aliases']).then((s) => s.toJSON())).to.eventually.deep.equal({
+        substanceType: 'cider'
       }),
 
-      expect(substanceController.findByAlias('punkku')).to.eventually.shallowDeepEqual({
-        substanceType: 'redWine',
-        aliases: [
-          'punkku',
-          'punaviini'
-        ]
+      expect(substanceController.findByAlias('punkku').omit(['id', 'aliases']).then((s) => s.toJSON())).to.eventually.deep.equal({
+        substanceType: 'redWine'
       })
     ])
   })
