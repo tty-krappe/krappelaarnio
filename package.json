@@ -9,8 +9,8 @@
     "web:build": "node web/build/build.js",
     "web:lint": "eslint --ext .js,.vue web/src web/test/unit/specs web/test/e2e/specs",
     "web:unit": "cross-env BABEL_ENV=test karma start web/test/unit/karma.conf.js --single-run",
-    "web:e2e": "node web/test/e2e/runner.js",
-    "web:test": "npm run web:unit && npm run web:e2e",
+    "web:e2e": "NODE_ENV=testing node web/test/e2e/runner.js",
+    "web:test": "NODE_ENV=testing npm run web:unit && npm run web:e2e",
     "rest:dev": "nodemon services/rest.js",
     "telegram:dev": "nodemon services/telegram.js",
     "irc:dev": "nodemon services/irc.js",
@@ -19,9 +19,11 @@
     "irc:prod": "node services/irc.js",
     "services:lint": "eslint --ext .js services",
     "services:unit": "./node_modules/.bin/istanbul cover cross-env BABEL_ENV=test ./node_modules/.bin/mocha services/test/unit/*",
-    "services:test": "npm run services:unit",
+    "services:test": "NODE_ENV=testing npm run services:unit",
+    "migrate:dev": "NODE_ENV=development knex migrate:latest",
+    "migrate:test": "NODE_ENV=testing knex migrate:latest",
     "lint": "npm run web:lint && npm run services:lint",
-    "test": "npm run services:test && npm run web:test"
+    "test": "NODE_ENV=testing npm run services:test && npm run web:test"
   },
   "dependencies": {
     "bluebird": "^3.5.0",
