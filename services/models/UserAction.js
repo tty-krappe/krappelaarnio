@@ -25,6 +25,9 @@ class UserAction extends Model {
         meta: {
           type: 'object',
           properties: {
+            interface: {type: 'string', enum: ['irc', 'telegram']},
+            nicknameAlias: {type: 'string'},
+            commandAlias: {type: 'string'},
             message: {type: 'string'}
           }
         },
