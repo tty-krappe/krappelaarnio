@@ -22,6 +22,12 @@ class UserAction extends Model {
         userId: {type: 'integer'},
         action: {type: 'string', enum: _.values(ActionType)},
         substanceId: {type: 'integer'},
+        meta: {
+          type: 'object',
+          properties: {
+            message: {type: 'string'}
+          }
+        },
         createdAt: {
           type: ['string', 'null'],
           format: ['date-time', 'null']
