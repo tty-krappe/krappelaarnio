@@ -11,11 +11,11 @@ class User extends Model {
   static get jsonSchema () {
     return {
       type: 'object',
-      required: ['nickName'],
+      required: ['nickname'],
 
       properties: {
         id: {type: 'integer'},
-        nickName: {type: 'string', minLength: 1, maxLength: 255},
+        nickname: {type: 'string', minLength: 1, maxLength: 255},
 
         aliases: {
           type: ['array', 'null'],
