@@ -12,21 +12,10 @@ describe('SubstanceController', () => {
 
   it('should find substances by alias', () => {
     return Promise.all([
-      expect(substanceController.findByAlias('bisse').omit(['id', 'aliases']).then((s) => s.toJSON())).to.eventually.deep.equal({
-        substanceType: 'beer'
-      }),
-
-      expect(substanceController.findByAlias('olut').omit(['id', 'aliases']).then((s) => s.toJSON())).to.eventually.deep.equal({
-        substanceType: 'beer'
-      }),
-
-      expect(substanceController.findByAlias('siideri').omit(['id', 'aliases']).then((s) => s.toJSON())).to.eventually.deep.equal({
-        substanceType: 'cider'
-      }),
-
-      expect(substanceController.findByAlias('punkku').omit(['id', 'aliases']).then((s) => s.toJSON())).to.eventually.deep.equal({
-        substanceType: 'redWine'
-      })
+      expect(substanceController.findByAlias('bisse')).to.eventually.have.deep.property('substanceType', 'beer'),
+      expect(substanceController.findByAlias('olut')).to.eventually.have.deep.property('substanceType', 'beer'),
+      expect(substanceController.findByAlias('siideri')).to.eventually.have.deep.property('substanceType', 'cider'),
+      expect(substanceController.findByAlias('punkku')).to.eventually.have.deep.property('substanceType', 'redWine')
     ])
   })
 

@@ -12,5 +12,8 @@ module.exports = {
       .query()
       .whereJsonSupersetOf('Substance.aliases', [substanceName])
       .first()
+      .then((substance) => {
+        return substance
+      })
   }
 }
